@@ -36,8 +36,8 @@ func BitToAlgebraic(p int) string {
 
 // BitToCartesian converts an integer bit position to Cartesian coordinates.
 func BitToCartesian(p int) (int, int) {
-	x := p % int(FILES)
-	y := p / int(FILES)
+	x := p % FILES
+	y := p / FILES
 	return x, y
 }
 
@@ -49,6 +49,6 @@ func CartesianToAlgebraic(x int, y int) string {
 
 // CartesianToBit converts Cartesian coordinates to an integer bit position.
 func CartesianToBit(x int, y int) int {
-	bit := y*int(FILES) + x
+	bit := y*FILES + x
 	return bit
 }

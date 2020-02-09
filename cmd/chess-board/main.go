@@ -15,6 +15,6 @@ func main() {
 
 	fmt.Println(board)
 	fmt.Println("White to move... e4")
-	board.MovePieceAlgebraic(board.GetIndex(chess.Pawn(chess.WHITE)), "e2", "e4")
+	board.MovePieceAlgebraic(chess.WhitePawn.Index, "e2", "e4")
 	fmt.Println(board)
 }

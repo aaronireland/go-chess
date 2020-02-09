@@ -1,12 +1,14 @@
 package chess
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // RANKS defines the number of rows on the board
 // FILES defines the number of columns on the board
 const (
-	RANKS uint8 = 8
-	FILES uint8 = 8
+	RANKS int = 8
+	FILES int = 8
 )
 
 const (
@@ -32,14 +34,11 @@ type Board struct {
 	Occupied  Bitboard // Union of all piece positions gives current occupied squares
 }
 
-// NewBoard returns a new instance of the chess board optionally initialized with the requested board positions
+// NewBoard returns a new instance of the chess board or optionally copies an existing board
+// by initializing with a copy of the requested board positions
 func NewBoard(positions ...Bitboard) (*Board, error) {
-	board := Board{
-		Pieces: []Piece{
-			Rook(WHITE), Knight(WHITE), Bishop(WHITE), Queen(WHITE), King(WHITE), Pawn(WHITE),
-			Rook(BLACK), Knight(BLACK), Bishop(BLACK), Queen(BLACK), King(BLACK), Pawn(BLACK),
-		},
-	}
+
+	board := Board{Pieces: Pieces}
 	if len(positions) > 0 && len(positions) != len(board.Pieces) {
 		err := fmt.Errorf(
 			"Unable to determine board position, expecting %d bitboards, received %d",
@@ -74,23 +73,13 @@ func (b Board) GetSquare(index int) (bool, *Piece) {
 
 }
 
-// GetIndex returns the index of the requested Piece or -1 if not found
-func (b Board) GetIndex(p Piece) int {
-	for index, piece := range b.Pieces {
-		if piece.Equals(p) {
-			return index
-		}
-	}
-	return -1
-}
-
 // String displays the current board a simple console-friendly unicode grid
 func (b *Board) String() string {
 	s := "\n A B C D E F G H\n"
 	for rank := int(RANKS - 1); rank >= 0; rank-- {
 		s += fmt.Sprintf("%d", rank+1)
-		for file := 0; file < int(FILES); file++ {
-			index := (rank * int(FILES)) + file
+		for file := 0; file < FILES; file++ {
+			index := (rank * FILES) + file
 			if occupied, piece := b.GetSquare(index); occupied {
 				s += piece.Unicode()
 			} else {

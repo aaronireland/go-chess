@@ -1,6 +1,9 @@
 package chess
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 // Color is an enum to distinguish white/black pieces
 type Color uint8
@@ -35,20 +38,52 @@ var PieceNames = map[Symbol]string{
 	KING:   "king",
 }
 
+// WhitePawn WhiteBishop etc...  are Piece objects with attribues unique to
+// the particular piece type
+var (
+	WhitePawn   = pawn(WHITE, 0)
+	WhiteBishop = bishop(WHITE, 1)
+	WhiteKnight = knight(WHITE, 2)
+	WhiteRook   = rook(WHITE, 3)
+	WhiteQueen  = queen(WHITE, 4)
+	WhiteKing   = king(WHITE, 5)
+	BlackPawn   = pawn(BLACK, 6)
+	BlackBishop = bishop(BLACK, 7)
+	BlackKnight = knight(BLACK, 8)
+	BlackRook   = rook(BLACK, 9)
+	BlackQueen  = queen(BLACK, 10)
+	BlackKing   = king(BLACK, 11)
+)
+
+// Pieces is a slice of all chess piece types. A slice is used instead of a map
+// to avoid overhead in lookups
+var Pieces = []Piece{
+	WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhitePawn,
+	BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackPawn,
+}
+
+func init() {
+	// Ensure the Pieces are sorted by index
+	sort.SliceStable(Pieces, func(i, j int) bool {
+		return Pieces[i].Index < Pieces[j].Index
+	})
+
+}
+
 // PieceUnicodes provides a visual representation for each piece for drawing boards/icons in a console
 var PieceUnicodes = map[Piece]string{
-	Pawn(WHITE):   "♙",
-	Bishop(WHITE): "♗",
-	Knight(WHITE): "♘",
-	Rook(WHITE):   "♖",
-	Queen(WHITE):  "♕",
-	King(WHITE):   "♔",
-	Pawn(BLACK):   "♟",
-	Bishop(BLACK): "♝",
-	Knight(BLACK): "♞",
-	Rook(BLACK):   "♜",
-	Queen(BLACK):  "♛",
-	King(BLACK):   "♚",
+	WhitePawn:   "♙",
+	WhiteBishop: "♗",
+	WhiteKnight: "♘",
+	WhiteRook:   "♖",
+	WhiteQueen:  "♕",
+	WhiteKing:   "♔",
+	BlackPawn:   "♟",
+	BlackBishop: "♝",
+	BlackKnight: "♞",
+	BlackRook:   "♜",
+	BlackQueen:  "♛",
+	BlackKing:   "♚",
 }
 
 // Piece groups the attributes required to distinguish pieces
@@ -56,6 +91,7 @@ type Piece struct {
 	Color  Color
 	Symbol Symbol
 	Value  uint8
+	Index  int
 }
 
 func (c Color) String() string {
@@ -101,32 +137,26 @@ func (p Piece) Equals(p2 Piece) bool {
 	return p.Color == p2.Color && p.SameType(p2)
 }
 
-// Pawn returns a piece representing a pawn of the requested color
-func Pawn(c Color) Piece {
-	return Piece{c, PAWN, 1}
+func pawn(c Color, i int) Piece {
+	return Piece{c, PAWN, 1, i}
 }
 
-// Bishop returns a piece representing a bishop of the requested color
-func Bishop(c Color) Piece {
-	return Piece{c, BISHOP, 3}
+func bishop(c Color, i int) Piece {
+	return Piece{c, BISHOP, 3, i}
 }
 
-// Knight returns a piece representing a knight of the requested color
-func Knight(c Color) Piece {
-	return Piece{c, KNIGHT, 3}
+func knight(c Color, i int) Piece {
+	return Piece{c, KNIGHT, 3, i}
 }
 
-// Rook returns a piece representing a rook of the requested color
-func Rook(c Color) Piece {
-	return Piece{c, ROOK, 5}
+func rook(c Color, i int) Piece {
+	return Piece{c, ROOK, 5, i}
 }
 
-// Queen returns a piece representing a queen of the requested color
-func Queen(c Color) Piece {
-	return Piece{c, QUEEN, 9}
+func queen(c Color, i int) Piece {
+	return Piece{c, QUEEN, 9, i}
 }
 
-// King returns a piece representing a king of the requested color
-func King(c Color) Piece {
-	return Piece{c, KING, 0}
+func king(c Color, i int) Piece {
+	return Piece{c, KING, 0, i}
 }
