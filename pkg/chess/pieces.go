@@ -41,18 +41,18 @@ var PieceNames = map[Symbol]string{
 // WhitePawn WhiteBishop etc...  are Piece objects with attribues unique to
 // the particular piece type
 var (
-	WhitePawn   = pawn(WHITE, 0)
-	WhiteBishop = bishop(WHITE, 1)
-	WhiteKnight = knight(WHITE, 2)
-	WhiteRook   = rook(WHITE, 3)
-	WhiteQueen  = queen(WHITE, 4)
-	WhiteKing   = king(WHITE, 5)
-	BlackPawn   = pawn(BLACK, 6)
-	BlackBishop = bishop(BLACK, 7)
-	BlackKnight = knight(BLACK, 8)
-	BlackRook   = rook(BLACK, 9)
-	BlackQueen  = queen(BLACK, 10)
-	BlackKing   = king(BLACK, 11)
+	WhiteRook   = rook(WHITE, 0)
+	WhiteKnight = knight(WHITE, 1)
+	WhiteBishop = bishop(WHITE, 2)
+	WhiteQueen  = queen(WHITE, 3)
+	WhiteKing   = king(WHITE, 4)
+	WhitePawn   = pawn(WHITE, 5)
+	BlackRook   = rook(BLACK, 6)
+	BlackKnight = knight(BLACK, 7)
+	BlackBishop = bishop(BLACK, 8)
+	BlackQueen  = queen(BLACK, 9)
+	BlackKing   = king(BLACK, 10)
+	BlackPawn   = pawn(BLACK, 11)
 )
 
 // Pieces is a slice of all chess piece types. A slice is used instead of a map

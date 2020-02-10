@@ -78,7 +78,7 @@ func (b Bitboard) Population() int {
 //-----------------------------------------------------------------------------
 
 // These are Go ports of the functions given on the Chess Programming wiki:
-// <https://chessprogramming.wikispaces.com/Flipping+Mirroring+and+Rotating>.
+// <https://chessprogramming.org/Flipping_Mirroring_and_Rotating>.
 
 // FlipVertical returns a new bitboard flipped vertically about the center ranks.
 func (b Bitboard) FlipVertical() Bitboard {

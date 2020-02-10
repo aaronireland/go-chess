@@ -42,7 +42,7 @@ func NewBoard(positions ...Bitboard) (*Board, error) {
 	if len(positions) > 0 && len(positions) != len(board.Pieces) {
 		err := fmt.Errorf(
 			"Unable to determine board position, expecting %d bitboards, received %d",
-			len(board.Positions), len(positions),
+			len(board.Pieces), len(positions),
 		)
 		return nil, err
 	} else if len(positions) > 0 {
@@ -75,7 +75,7 @@ func (b Board) GetSquare(index int) (bool, *Piece) {
 
 // String displays the current board a simple console-friendly unicode grid
 func (b *Board) String() string {
-	s := "\n A B C D E F G H\n"
+	s := "A B C D E F G H\n"
 	for rank := int(RANKS - 1); rank >= 0; rank-- {
 		s += fmt.Sprintf("%d", rank+1)
 		for file := 0; file < FILES; file++ {
